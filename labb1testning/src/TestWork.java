@@ -7,6 +7,8 @@ import static org.junit.Assume.assumeTrue;
 
 import org.junit.jupiter.api.Assumptions.*;
 
+import java.util.Arrays;
+
 public class TestWork {
 
     //a) addWorkingPeriods
@@ -23,10 +25,10 @@ public class TestWork {
     public void testAddWorkingPeriodEmployeeNull() {
         WorkSchedule test2 = new WorkSchedule(24);
         boolean result = test2.addWorkingPeriod(null, 1, 2);
-        assumeFalse(result);
+        assertFalse(result);
     }
 
-    //Test is starttime < 0 returns false and schedule is unchanged
+    //Test if starttime < 0 returns false and schedule is unchanged
     @Test
     public void testStarttimeLessThanZero() {
         WorkSchedule test3 = new WorkSchedule(24);
@@ -36,6 +38,17 @@ public class TestWork {
         assertFalse(result);
         assertEquals(originalCopy, test3);
 
+    }
+
+    //Test that start > end returns false and schedule unchanged
+    @Test
+    public void testStartOverEnd() {                                              //Bug
+        WorkSchedule test = new WorkSchedule(24);
+        WorkSchedule copy = test;
+
+        boolean result = test.addWorkingPeriod("Knut", 12, 7);
+        assertFalse(result);
+        assertEquals(test, copy);
     }
 
     //Test if endtime >= size, then return false and schedule is unchanged
@@ -57,18 +70,17 @@ public class TestWork {
     // equal to requiredNumber then returns false and the schedule is unchanged
     @Test
     public void testWorkingEmployeesIsEqualToRequiredNumber() {
-        WorkSchedule test5 = new WorkSchedule(24);
+        WorkSchedule test = new WorkSchedule(24);
         int start = 2;
         int end = 12;
-        int n = test5.workingEmployees(start, end).length;
-        test5.setRequiredNumber(n, start, end);
 
-        assumeTrue((test5.workingEmployees(6, 9).length == n));
+        test.setRequiredNumber(1, start, end);
+        test.addWorkingPeriod("Min Gant Klocka Yao", 4, 10);
 
-        WorkSchedule originalCopy = test5;
+        WorkSchedule originalCopy = test;
 
-        assertFalse(test5.addWorkingPeriod("Bob", 5, 7));
-        assertEquals(originalCopy, test5);
+        assertFalse(test.addWorkingPeriod("Bob", 5, 7));
+        assertEquals(originalCopy, test);
     }
 
     //if for any hour in the interval starttime to endtime there is a string in workingEmployees which equal
@@ -77,11 +89,11 @@ public class TestWork {
     public void testNoDupes() {
         WorkSchedule test6 = new WorkSchedule(24);
 
-        test6.addWorkingPeriod("Bob", 5, 10);
+        test6.addWorkingPeriod("Sven", 5, 10);
 
         WorkSchedule originalCopy = test6;
 
-        assertFalse(test6.addWorkingPeriod("Bob", 7, 9));
+        assertFalse(test6.addWorkingPeriod("Sven", 7, 9));
         assertEquals(originalCopy, test6);
 
     }
@@ -89,14 +101,16 @@ public class TestWork {
     //returns true,
     //for i between starttime and endtime, workingEmployees contain a string equal to employee and
     //the rest of the schedule is unchanged
-    @Test   //doesn't work
-    public void testEmployeeIsWoking() {
+    //TODO   weird att den buggar om vi inte har setRequiredNumber med, kolla upp detta!
+    @Test
+    public void testEmployeeIsWorking() {
         WorkSchedule test7 = new WorkSchedule(24);
+
         int start = 9;
         int end = 15;
 
         String employee = "Benny";
-
+        test7.setRequiredNumber(1, 9, 17);
         test7.addWorkingPeriod(employee, start, end);
 
         WorkSchedule originalCopy = test7;
@@ -118,14 +132,61 @@ public class TestWork {
     //b) workingEmployee
 
     //if starttime <= endtime then
-    //returns an array with distinct strings -- a string appears in the return array if and only if
+    //returns an array with olika strings -- a string appears in the return array if and only if
     //it appears in the workingEmployees of at least one hour in the interval starttime to endtime
+
+
+    //If start < end, should return array with string of the worker, and length 1, schedule unchanged.
     @Test
-    public void testStarttimmeNotLessThanOrEqualEndtime() {
+    public void testStartLessThanEnd() {
         WorkSchedule test = new WorkSchedule(24);
+        //WorkSchedule originalCopy = test;
+
+        test.setRequiredNumber(1, 10,12);
+        test.addWorkingPeriod("Fressia", 10, 12);
+
+        WorkSchedule originalCopy = test;
+
+        String[] workers = test.workingEmployees(10, 11);
+
+
+        assertTrue(Arrays.asList(workers).contains("Fressia"));
+        assertTrue(workers.length == 1);
+        assertEquals(test, originalCopy);
 
     }
 
+    //If start = end, should return array with string of the worker, and length 1, schedule unchanged.
+    @Test
+    public void testStartEqualEnd() {
+        WorkSchedule test = new WorkSchedule(24);
+
+        test.setRequiredNumber(1, 10,12);
+        test.addWorkingPeriod("Fressia", 10, 12);
+
+        WorkSchedule originalCopy = test;
+
+        String[] workers = test.workingEmployees(11, 11);
+
+
+        assertTrue(Arrays.asList(workers).contains("Fressia"));
+        assertTrue(workers.length == 1);
+        assertEquals(test, originalCopy);
+
+    }
+
+    //Assert that if starttime exceeds endtime it fails, schedule unchanged.
+    @Test
+    public void testStartNotOverEnd () {                        //Bug
+        WorkSchedule test = new WorkSchedule(24);
+        test.setRequiredNumber(1, 10,12);
+        test.addWorkingPeriod("Fressia", 10, 12);
+        WorkSchedule original = test;
+
+        assertTrue(test.workingEmployees(12, 10).length == 0);
+        assertEquals(test, original);
+
+    }
 
 
 }
