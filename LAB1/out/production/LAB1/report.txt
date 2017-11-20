@@ -1,0 +1,10 @@
+Report
+We decided to use print out statements at some points in the code. We added a print statement once the index had been initialized. We did this to see what values were generated throughout the initial code.
+
+When we ran the code, we noticed that somethings went wrong. Since the array is sorted, if the value found at a specific index is lower than the value you are looking for, you should continue searching to the right/higher index (since you are looking for a higher number). The code however did not do this.
+
+For example. When we were looking for the value 5, which is in the given array, the first index we got was 3 where we found the value 4. 5 > 4, so we should look at a higher index to search for 5, but the code did not do this. It looked the other way.
+
+We decided to switch places on the left = index + 1; and right = index - 1; since this would make more sense. After this, the code appears to work.
+
+We found this to be effective. At first we looked at the code and tried to understand it. After this we marked the point we found to be possible errors, or that we just found suspicious, which was where the index was initialized and where the new left and right were assigned. We then started looking at the values and finally found our error. We fixed it and finally did regression testing.

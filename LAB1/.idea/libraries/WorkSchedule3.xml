@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="WorkSchedule3">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/other/out/production/labb1testning/WorkSchedule.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
