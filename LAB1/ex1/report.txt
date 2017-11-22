@@ -79,6 +79,8 @@ Border cases:
         input: "employee" = Benny, "starttime" = 9, "endtime" = 15,
         expected: "addWorkingPeriod(employee, starttime, endtime) =true"
 
+Found bugs: It is possible for an employee to work with a starttime that comes after the endtime.
+
 
 b)
 
