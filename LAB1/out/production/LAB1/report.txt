@@ -1,0 +1,67 @@
+Report
+
+public boolean addWorkingPeriod(String employee, int starttime, int endtime);
+
+Input space:    employee != null (or "employee" in  {!null})
+
+Partition #1: starttime < 0 (or: "starttime" in {MIN_INT, ..., -1})
+    && endtime >= size (or: "endtime" in {size, ..., MAX_INT})
+    &&starttime > endtime (or "starttime" in {endtime, ..., MAX_INT})
+
+    test_addWorkingPeriod_part1:    input: "empolyee" = Kurt, "starttime" = -2,
+    "endtime" = 4, expected: "addWorkingPeriod(employee, starttime, endtime) = False"
+
+    test_addWorkingPeriod_part1:    input: "empolyee" = Kurt, "starttime" = 3,
+    "endtime" = 24, expected: "addWorkingPeriod(employee, starttime, endtime) = False"
+
+    test_addWorkingPeriod_part1:    input: "empolyee" = Kurt, "starttime" = 3,
+    "endtime" = 28, expected: "addWorkingPeriod(employee, starttime, endtime) = False"
+
+    test_addWorkingPeriod_part1:    input: "empolyee" = Knut, "starttime" = 12,
+    "endtime" = 7, expected: "addWorkingPeriod(employee, starttime, endtime) = False"
+
+Partition #2: workingemployees.length == requiredNumber (or: "employee" in {workingemployees}
+    && ("starttime" && "endtime") in {requiredNumber})
+
+    test_addWorkingPeriod_part2:    input: "empolyee" = Yao, "starttime" = 4,
+    "endtime" = 10,
+    input: "empolyee" = Bob, "starttime" = 5, "endtime" = 7,
+    expected: "addWorkingPeriod(employee, starttime, endtime) = False"
+
+Partition #3: workingEmployees[i] == employee (or: "employee" in {workingEmployees})
+    test_addWorkingPeriod_part3:    input: "empolyee" = Sven, "starttime" = 5,
+    "endtime" = 10,
+     input: "employee" = Sven", "starttime" = 7, "endtime" = 9,
+     expected: "addWorkingPeriod(employee, starttime, endtime) = False"
+
+Partition #4: i > starttime && i < endtime && workingEmployees[x] = employee
+    test_addWorkingPeriod_part1:    input: "empolyee" = Kurt, "starttime" = 3,
+    "endtime" = 24, expected: "addWorkingPeriod(employee, starttime, endtime) = False"
+
+Border cases:
+
+    testConstructor: input: "workschedule = 24,        "   expected: "true"
+    testAddWorkingPeriodEmployeeNull:   input: "employee = null",   expected: "false"
+    testStarttimeLessThanZero:          input: "starttime = -2",    expected: "false"
+    testStartOverEnd:                   input: "start = 12, end = 7",   expected: "false"
+    testEndtimeLessOrEqualSize:         input: "end = size,  end = 28"  expected: "false"
+    testWorkingEmployeesIsEqualToRequiredNumber:    input: "reqNumber = 1" (.....hur ska man skriva till Bob?)    expected: "false"
+    testNoDupes:              input: "employee = Sven" (Sven-dubblett...????)    expected: "false"
+    testEmployeeIsWorking:    input: "employee = Benny"  SKA MAN HA NÅT MER??  expected: "true"
+    testStartLessThanEnd:       input: "start = 10, end = 12", employee = Fressia"   expected: "employee"
+    testStartEqualEnd:          input: "start = 11, end = 11", expected: "employee"
+    testStartNotOverEnd:        input: "start = 12, end = 10", expected: "..........."
+
+Found bugs: ?????? "testEmployeeIsWorking" doesn't work without setting required number of emploqyees.
+
+
+
+
+
+
+
+
+
+
+
+

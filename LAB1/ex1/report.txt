@@ -1,8 +1,100 @@
 Report
 
+
+a)
 public boolean addWorkingPeriod(String employee, int starttime, int endtime);
 
 Input space:    employee != null (or "employee" in  {!null})
+
+Partition #1: starttime < 0 (or: "starttime" in {MIN_INT, ..., -1})
+    && endtime >= size (or: "endtime" in {size, ..., MAX_INT})
+    &&starttime > endtime (or "starttime" in {endtime, ..., MAX_INT})
+
+    test_addWorkingPeriod_part1:    input: "empolyee" = Kurt, "starttime" = -2,
+    "endtime" = 4, expected: "addWorkingPeriod(employee, starttime, endtime) = False"
+
+    test_addWorkingPeriod_part1:    input: "empolyee" = Kurt, "starttime" = 3,
+    "endtime" = 24, expected: "addWorkingPeriod(employee, starttime, endtime) = False"
+
+    test_addWorkingPeriod_part1:    input: "empolyee" = Kurt, "starttime" = 3,
+    "endtime" = 28, expected: "addWorkingPeriod(employee, starttime, endtime) = False"
+
+    test_addWorkingPeriod_part1:    input: "empolyee" = Knut, "starttime" = 12,
+    "endtime" = 7, expected: "addWorkingPeriod(employee, starttime, endtime) = False"
+
+Partition #2: workingemployees.length == requiredNumber (or: "employee" in {workingemployees}
+    && ("starttime" && "endtime") in {requiredNumber})
+
+    test_addWorkingPeriod_part2:    input: "empolyee" = Yao, "starttime" = 4,
+    "endtime" = 10,
+    input: "empolyee" = Bob, "starttime" = 5, "endtime" = 7,
+    expected: "addWorkingPeriod(employee, starttime, endtime) = False"
+
+Partition #3: workingEmployees[i] == employee (or: "employee" in {workingEmployees})
+    test_addWorkingPeriod_part3:    input: "empolyee" = Sven, "starttime" = 5,
+    "endtime" = 10,
+     input: "employee" = Sven", "starttime" = 7, "endtime" = 9,
+     expected: "addWorkingPeriod(employee, starttime, endtime) = False"
+
+Partition #4: i > starttime && i < endtime && workingEmployees[x] = employee
+    test_addWorkingPeriod_part4:    input: "empolyee" = Hora, "starttime" = 1,
+    "endtime" = 3, expected: "addWorkingPeriod(employee, starttime, endtime) = True"
+
+
+Border cases:
+
+    test_addWorkingEmployee_testAddWorkingPeriodEmployeeNull:
+       input: "employee" = null, "starttime" = 1, "endtime" = 2,
+       expected: "addWorkingPeriod(employee, starttime, endtime) = false"
+
+    test_addWorkingEmployee_testStarttimeLessThanZero:
+        input: "employee" = kurt, "starttime" = -2,  "endtime" = 4,
+        expected: "addWorkingPeriod(employee, starttime, endtime) =false"
+
+    test_addWorkingEmployee_testStartOverEnd:
+        input: "employee" = Knut, "starttime" = 12, "endtime = 7",
+        expected: "addWorkingPeriod(employee, starttime, endtime) =false"
+
+    test_addWorkingEmployee_testEndtimeLessOrEqualSize:
+        input: "employee" = Kurt, starttime" = 3, "endtime" = size,
+        expected: "addWorkingPeriod(employee, starttime, endtime) =false"
+        input: "employee" = Kurt, starttime" = 3, "endtime" = 28,
+        expected: "addWorkingPeriod(employee, starttime, endtime) =false"
+
+    test_addWorkingEmployee_testWorkingEmployeesIsEqualToRequiredNumber:
+        input: "employee" = Yao, "starttime" = 4, "endtime" = 10,
+        input: "employee" = Bob, "starttime" = 5, "endtime" = 7,
+        expected: "addWorkingPeriod(employee, starttime, endtime) =false"
+
+    test_addWorkingEmployee_testNoDupes:
+        input: "employee" = Sven, "starttime" = 5, "endtime" = 10,
+        input: "employee" = Sven, "starttime" = 7, "endtime" = 9,
+        expected: "addWorkingPeriod(employee, starttime, endtime) = false"
+
+    test_addWorkingEmployee_testItWorks:
+        input: "employee" = Hora, "starttime" = 1, "endtime" = 3,
+        expected: "addWorkingPeriod(employee, starttime, endtime) = true"
+
+    test_addWorkingEmployee_testEmployeeIsWorking:
+        input: "employee" = Benny, "starttime" = 9, "endtime" = 15,
+        expected: "addWorkingPeriod(employee, starttime, endtime) =true"
+
+
+b)
+
+
+    test_addWorkingEmployee_testStartLessThanEnd:
+        input: "start = 10, end = 12", employee = Fressia"   expected: "addWorkingPeriod(employee, starttime, endtime) =employee"
+
+    test_addWorkingEmployee_testStartEqualEnd:
+        input: "start = 11, end = 11", expected: "addWorkingPeriod(employee, starttime, endtime) =employee"
+
+    test_addWorkingEmployee_testStartNotOverEnd:
+        input: "start = 12, end = 10", expected: "addWorkingPeriod(employee, starttime, endtime) =
+
+
+Found bugs: ?????? "testEmployeeIsWorking" doesn't work without setting required number of emploqyees.
+
 
 
 

@@ -1,0 +1,20 @@
+Report
+
+public boolean addWorkingPeriod(String employee, int starttime, int endtime);
+
+Input space:    employee != null (or "employee" in  {!null})
+
+
+
+Border cases:
+
+    testInsertStatementCoverage:        input:    expected:
+    testInsertBranchCoverage:           input:    expected:
+    ttestMemberStatementCoverage:       input:    expected:
+    testMemberBranchCoverage:           input:    expected:
+    test......:                         input:    expected:
+    test......:                         input:    expected:
+
+Found bugs:
+
+

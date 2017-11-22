@@ -73,7 +73,7 @@ public class TestWork {
         int end = 12;
 
         test.setRequiredNumber(1, start, end);
-        test.addWorkingPeriod("Min Gant Klocka Yao", 4, 10);
+        test.addWorkingPeriod("Yao", 4, 10);
 
         WorkSchedule originalCopy = test;
 
@@ -96,10 +96,19 @@ public class TestWork {
 
     }
 
+    @Test
+    public void testItWorks() {
+        WorkSchedule test = new WorkSchedule(24);
+        test.setRequiredNumber(1, 1, 3);
+        WorkSchedule copy = test;
+
+        assertTrue(test.addWorkingPeriod("Hora", 1, 3));
+        assertEquals(test, copy);
+    }
+
     //returns true,
     //for i between starttime and endtime, workingEmployees contain a string equal to employee and
     //the rest of the schedule is unchanged
-    //TODO   weird att den buggar om vi inte har setRequiredNumber med, kolla upp detta!
     @Test
     public void testEmployeeIsWorking() {
         WorkSchedule test7 = new WorkSchedule(24);
@@ -175,7 +184,7 @@ public class TestWork {
 
     //Assert that if starttime exceeds endtime it fails, schedule unchanged.
     @Test
-    public void testStartNotOverEnd () {                        //Bug
+    public void testStartNotOverEnd () {                                             //Bug
         WorkSchedule test = new WorkSchedule(24);
         test.setRequiredNumber(1, 10,12);
         test.addWorkingPeriod("Fressia", 10, 12);
