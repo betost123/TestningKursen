@@ -1,0 +1,16 @@
+Report
+
+public boolean addWorkingPeriod(String employee, int starttime, int endtime);
+
+Input space:    employee != null (or "employee" in  {!null})
+
+
+
+
+
+
+
+
+
+
+

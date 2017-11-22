@@ -5,8 +5,6 @@ import static org.junit.Assume.*;
 import static org.junit.Assume.assumeFalse;
 import static org.junit.Assume.assumeTrue;
 
-import org.junit.jupiter.api.Assumptions.*;
-
 import java.util.Arrays;
 
 public class TestWork {
