@@ -184,7 +184,7 @@ public class TestWork {
 
     //Assert that if starttime exceeds endtime it fails, schedule unchanged.
     @Test
-    public void testStartNotOverEnd () {                                             //Bug
+    public void testStartNahOverEnd () {                                             //Bug
         WorkSchedule test = new WorkSchedule(24);
         test.setRequiredNumber(1, 10,12);
         test.addWorkingPeriod("Fressia", 10, 12);

@@ -79,32 +79,38 @@ Border cases:
         input: "employee" = Benny, "starttime" = 9, "endtime" = 15,
         expected: "addWorkingPeriod(employee, starttime, endtime) =true"
 
-Found bugs: It is possible for an employee to worke
+Found bugs: It is possible for an employee to work with a starttime that comes after the endtime.
 
 
 b)
+public String[] workingEmployees(int starttime, int endtime)
 
+Input space: starttime > 0 (or: "starttime" in {0, ..., MAX_INT})
+&& endtime < size (or: "endtime" in {starttime, ..., size})
 
-    test_addWorkingEmployee_testStartLessThanEnd:
-        input: "start = 10, end = 12", employee = Fressia"   expected: "addWorkingPeriod(employee, starttime, endtime) =employee"
+Partition #1: starttime <= endtime (or: "starttime" in {0, ..., endtime})
+    test_workingEmployees_part1: input: "starttime" = 10, "endtime" = 11,
+    expected: "workingEmployees(starttime, endtime) = [worker]"
 
-    test_addWorkingEmployee_testStartEqualEnd:
-        input: "start = 11, end = 11", expected: "addWorkingPeriod(employee, starttime, endtime) =employee"
+Partition #1: starttime = endtime (or: "starttime" in {endtime})
+    test_workingEmployees_part1: input: "starttime" = 11, "endtime" = 11,
+    expected: "workingEmployees(starttime, endtime) = [worker]"
 
-    test_addWorkingEmployee_testStartNotOverEnd:
-        input: "start = 12, end = 10", expected: "addWorkingPeriod(employee, starttime, endtime) =
+Partition #2: starttime > endtime (or: "starttime" in {endtime, ..., MAX_INT})
+    test_workingEmployees_part1: input: "starttime" = 12, "endtime" = 10,
+    expected: "workingEmployees(starttime, endtime) = []"
 
+Border cases:
+    test_workingEmployees_testStartLessThanEnd:
+        input: "starttime" = 10, "endtime" = 11,
+        expected: "workingEmployees(starttime, endtime) = [worker]"
 
-Found bugs: ?????? "testEmployeeIsWorking" doesn't work without setting required number of emploqyees.
+    test_workingEmployees_testStartEqualEnd:
+        input: "starttime" = 11, "endtime" = 11,
+        expected: "workingEmployees(starttime, endtime) = [worker]"
 
+    test_eorkingEmployees_testStartNahOverEnd:
+        input: "starttime" = 12, "endtime" = 10,
+        expected: "workingEmployees(starttime, endtime) = []"
 
-
-
-
-
-
-
-
-
-
-
+Found bugs: It is possible to insert a starttime > endtime

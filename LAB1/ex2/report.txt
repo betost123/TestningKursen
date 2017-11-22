@@ -1,20 +1,10 @@
 Report
 
-public boolean addWorkingPeriod(String employee, int starttime, int endtime);
+In order to derive these test cases we made sure to draw a control flow graph
+for each method that we were testing. For statement coverage we made sure to
+test every statement, and for branch coverage we made sure to test all the
+branches.
 
-Input space:    employee != null (or "employee" in  {!null})
-
-
-
-Border cases:
-
-    testInsertStatementCoverage:        input:    expected:
-    testInsertBranchCoverage:           input:    expected:
-    ttestMemberStatementCoverage:       input:    expected:
-    testMemberBranchCoverage:           input:    expected:
-    test......:                         input:    expected:
-    test......:                         input:    expected:
-
-Found bugs:
-
-
+We found a bug in the containsArithTriple method wehere it was possible for
+a number to be compared twice, so we changed from j<= i to j<i. This worked
+better.
