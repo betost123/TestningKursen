@@ -6,34 +6,33 @@ var arr : array<int>; // contents of stack.
 var top : int; // The index of the top of the stack, or -1 if the stack is empty
 
 // This predicate express a class invariant: All objects of this calls should satisfy this.
-predicate Valid(arr : array<int>)
+
+predicate Valid()
 reads this, this.arr;
 {
-arr != null && capacity > 0 && arr.Length == capacity && top >= -1 && top < capacity  
-// TOP should be at least -1 and strictly less than CAPACITY
+      arr != null && capacity > 0 && arr.Length == capacity && top >= -1 && top < capacity  // TOP should be at least -1 and strictly less than CAPACITY
 }
 
 predicate Empty()
 reads this;
 {
-top == -1
+  top == -1
 }
 
 predicate Full()
 reads this;
 {
-top == capacity -1 
+  top == capacity -1 
 }
-/*
+
+
 method Init(c : int)
 modifies this;
 requires c > 0;
-ensures arr.length == c;
+ensures fresh(arr);
+ensures arr.Length == c;
 ensures Empty();
 ensures Valid();
-ensures fresh(arr); // ensures arr is a newly created object.
-// Additional post-condition to be given here!
-
 {
 capacity := c;
 arr := new int[c];
@@ -47,7 +46,6 @@ ensures Empty() ==> res == true;
   return top == -1;
 }
 
-
 // Returns the top element of the stack, without removing it.
 method Peek() returns (elem : int)
 //reads this, this.arr;
@@ -59,32 +57,35 @@ ensures elem == arr[top];
 }
 
 
+
 // Pushed an element to the top of a (non full) stack.
 method Push(elem : int)
-modifies arr;
+modifies arr, `top;
 requires Valid();
 requires !Full();
 ensures Valid();
-ensures arr[top]== elem;
+ensures top == old(top)+1;
+ensures arr[top] == elem;
 //skriv om detta!!!
-ensures forall z : int :: 0 <= z < top ==> arr[z] == old(arr[z]);
+ensures forall k : int :: 0 <= k < top ==> arr[k] == old(arr[k]);
 {
   top := top + 1;
   arr[top] := elem;
 }
 
-
 // Pops the top element off the stack.
+
 method Pop() returns (elem : int)
-modifies top
+modifies `top;
 requires Valid();
 requires !Empty();
 ensures Valid();
-ensures top == old(top)-1 && elem == old(arr[top]);
+ensures top == old(top)-1;
+ensures elem == old(arr[top]);
+ensures !Full();
 {
-  elem := top;
   top := top -1;
-  return elem;
+  return arr[top + 1];
 }
 
 
