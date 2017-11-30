@@ -7,73 +7,86 @@ var top : int; // The index of the top of the stack, or -1 if the stack is empty
 
 // This predicate express a class invariant: All objects of this calls should satisfy this.
 predicate Valid(arr : array<int>)
-      requires arr != null;
-      requires capacity > 0 && ar.length == capacity;
-      requires top == -1 && top < capacity ;  // TOP should be at least -1 and strictly less than CAPACITY
-      
-reads ?;
+reads this, this.arr;
 {
-
+arr != null && capacity > 0 && arr.Length == capacity && top >= -1 && top < capacity  
+// TOP should be at least -1 and strictly less than CAPACITY
 }
 
 predicate Empty()
 reads this;
 {
-
+top == -1
 }
 
 predicate Full()
 reads this;
 {
-
+top == capacity -1 
 }
 /*
 method Init(c : int)
 modifies this;
-requires ?
-
+requires c > 0;
+ensures arr.length == c;
+ensures Empty();
+ensures Valid();
 ensures fresh(arr); // ensures arr is a newly created object.
 // Additional post-condition to be given here!
+
 {
 capacity := c;
 arr := new int[c];
 top := -1;
 }
-*/
 
-/*
+
 method isEmpty() returns (res : bool)
-
+ensures Empty() ==> res == true;
 {
-
+  return top == -1;
 }
-*/
 
-/*
+
 // Returns the top element of the stack, without removing it.
 method Peek() returns (elem : int)
-
+//reads this, this.arr;
+requires this.Valid();
+requires !Empty();
+ensures elem == arr[top];
 {
-
+  return arr[top];
 }
-*/
 
-/*
+
 // Pushed an element to the top of a (non full) stack.
 method Push(elem : int)
-
+modifies arr;
+requires Valid();
+requires !Full();
+ensures Valid();
+ensures arr[top]== elem;
+//skriv om detta!!!
+ensures forall z : int :: 0 <= z < top ==> arr[z] == old(arr[z]);
 {
-
+  top := top + 1;
+  arr[top] := elem;
 }
-*/
+
+
 // Pops the top element off the stack.
-/*
 method Pop() returns (elem : int)
-
+modifies top
+requires Valid();
+requires !Empty();
+ensures Valid();
+ensures top == old(top)-1 && elem == old(arr[top]);
 {
-
+  elem := top;
+  top := top -1;
+  return elem;
 }
-*/
+
 
 method Shift()
 requires Valid() && !Empty();
