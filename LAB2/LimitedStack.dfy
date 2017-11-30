@@ -6,7 +6,11 @@ var arr : array<int>; // contents of stack.
 var top : int; // The index of the top of the stack, or -1 if the stack is empty
 
 // This predicate express a class invariant: All objects of this calls should satisfy this.
-predicate Valid()
+predicate Valid(arr : array<int>)
+      requires arr != null;
+      requires capacity > 0 && ar.length == capacity;
+      requires top == -1 && top < capacity ;  // TOP should be at least -1 and strictly less than CAPACITY
+      
 reads ?;
 {
 
