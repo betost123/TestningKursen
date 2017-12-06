@@ -34,9 +34,10 @@ class sorting{
       |a+b| == |a| + |b| 
     }
     
-    ghost method badSpec(a: seq<int>)
-    requires |a| < 2;
-    ensures  sorted(a[0..|a|);
+  method badSpec(s: seq<int>)
+    requires |s| < 2;
+    //ensures  sorted(a[0..|a|);
+    ensures forall i,j :: 0 <= i < j < |s| ==> s[i] <= s[j]
     {
       
     }
