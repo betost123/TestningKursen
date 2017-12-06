@@ -41,7 +41,7 @@ top := -1;
 
 
 method isEmpty() returns (res : bool)
-ensures Empty() ==> res == true;
+ensures Empty() ==> res;
 {
   return top == -1;
 }
@@ -109,16 +109,30 @@ i := i + 1;
 top := top - 1;
 }
 
-/*
+
 //Push onto full stack, oldest element is discarded.
 method Push2(elem : int)
-
+modifies `arr;
+      requires Valid();
+      requires Full();
+      ensures Valid();
+      ensures Full();
+      ensures arr.Length == old(arr).Length;
+      ensures forall k : int :: 0 <= k < capacity - 1 ==> arr[k] == old(arr)[k+1];
+      ensures arr[top] == elem;
 {
-
+   var temp_arr := new int[capacity];
+          forall(i | 0 <= i < arr.Length - 1)
+          {
+              temp_arr[i] := arr[i+1];
+          }
+          temp_arr[top] := elem;
+          
+          arr := temp_arr;
 }
-*/
 
-/*
+
+
 
 // When you are finished,  all the below assertions should be provable.
 // Feel free to add extra ones as well.
@@ -151,5 +165,5 @@ assert e3 == 99;
 assert s.arr[0] == 32;
 
 }
-*/
+
 }
