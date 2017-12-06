@@ -1,3 +1,12 @@
 Report
 
+Tokeneer:
+This class has a user id to verify who has the token. It also has the clearance level the token’s validity. You can invalidate a token by calling the invalid method. The preconditions are none. Post conditions are that you have an id, clearance level and valid thing.
+
+IDstn:
+This class has a door with a clearance level. The post condition is that a door gets a clearance level.
+
+EnrollmentStn:
+This class stores users with tokens. It first creates an empty map because we couldn’t get it to work otherwise, and then you can call a method that adds users with tokens.
+
 
