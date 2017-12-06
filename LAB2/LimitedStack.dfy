@@ -121,14 +121,14 @@ modifies `arr;
       ensures forall k : int :: 0 <= k < capacity - 1 ==> arr[k] == old(arr)[k+1];
       ensures arr[top] == elem;
 {
-   var temp_arr := new int[capacity];
+   var temp := new int[capacity];
           forall(i | 0 <= i < arr.Length - 1)
           {
-              temp_arr[i] := arr[i+1];
+              temp[i] := arr[i+1];
           }
-          temp_arr[top] := elem;
+          temp[top] := elem;
           
-          arr := temp_arr;
+          arr := temp;
 }
 
 
