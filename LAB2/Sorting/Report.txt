@@ -1,3 +1,16 @@
 Report
 
+2a)
+We wrote it on a paper and we don’t understand what you want.
+
+3a)
+It says that it takes in two sequence parameters a and b. It checks that a and b contains the same amount of copies of elements.
+Source: https://rise4fun.com/Dafny/tutorialcontent/Collections#h22 
+
+4a)
+Requires: array.Length > 0 && array has only integers
+Ensures: array is sorted && it has the same elements in it as before
+
+4b)
+The specification that you wrote in (4a) should use the predicate p. If it doesn't, your contract is under-specified: not all programs that satisfy it are sorting algorithms. In order to illustrate this: take the under-specified contract (the specification in (4a) minus the part that uses the predicate p) and write a simple program that satisfies it. (optionally, write it and verify it in Dafny).
 
