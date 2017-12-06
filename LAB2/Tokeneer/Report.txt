@@ -9,4 +9,4 @@ This class has a door with a clearance level. The post condition is that a door 
 EnrollmentStn:
 This class stores users with tokens. It first creates an empty map because we couldn’t get it to work otherwise, and then you can call a method that adds users with tokens.
 
-
+https://rise4fun.com/Dafny/G6SQ
