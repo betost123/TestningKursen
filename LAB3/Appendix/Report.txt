@@ -1,11 +1,23 @@
 Q1:
 
 1. Start. By executing backwards. 0 <= y has the fewest restrictions on input state. 
-2. We apply rule: Weakest precondition calculus Conditional wp(if x <0 then y := -x else y := x, y) = (By Conditional rule) (x<0 -> wp(y:=-x, y)) && (¬(x<0) -> wp(y:=x, y))= (By Assignment rule) ((x<0 -> -x<0) && (¬(x<0) -> x<0) = true
+2. We apply rule: Weakest precondition calculus Conditional
+wp(if x <0 then y := -x else y := x, y) =
+(By Conditional rule)
+(x<0 -> wp(y:=-x, y)) && (¬(x<0) -> wp(y:=x, y))=
+(By Assignment rule)
+((x<0 -> -x<0) && (¬(x<0) -> x<0) =
+true
 
 Q2:
 1. The program is not verifiable because if x and y are the same, you can’t guarantee that one is bigger than the other, obviously.
-2. wp(S,R) conditional proof wp(if x>y then big := x small := y else big := x small := y, big > small) = (By conditional rule) (x>y -> wp(big := x small := y, big>small)) && (!(x>y) -> wp(big := x small := y, big>small)) = (By assignment rule) (x>y -> x>yl) && (!(x>y) -> x<y) = false
+2. wp(S,R) conditional proof
+wp(if x>y then big := x small := y else big := x small := y, big > small) =
+(By conditional rule)
+(x>y -> wp(big := x small := y, big>small)) && (!(x>y) -> wp(big := x small := y, big>small)) =
+(By assignment rule)
+(x>y -> x>yl) && (!(x>y) -> x<y) =
+false
 
 //1.
 method Q2(x : int, y : int) returns (big : int, small : int) 
@@ -73,3 +85,55 @@ method ComputeFact(n : nat) returns (res : nat)
     i := i + 1;
   }
  }
+
+P:		n>0;
+R:		res==fact(n);
+I:		res==fact(i-1) && n>=i-1;
+B:		i<=n;
+S1:		res := 1; i := 2;
+S:		res := res *  i ; i := i+1;
+
+Loop invariant holds on entry
+P ==> wp(S1, I)
+n>0 ==>wp(res :=1; i :=2, res == fact(i-1) && n>= i-1)
+
+sequential
+n>0 ==> wp(res :=1, wp(i := 2, res ==fact(i-1) && n>= i-1))
+
+assignment(twice)
+n>0 ==> wp(res :=1, res = fact(2-1) && n>=2-1)
+n>0 ==> 1 == fact(2-1) && n>=2-1
+
+n>0 ==> n>=1
+which is trivially true
+
+Loop invariant holds at each iteration
+
+
+****wp(while B I S, R) =
+	I
+	&& ( B && I ==> wp(S, I))
+	&& (!B && I ==> R)
+
+= 
+res==fact(i-1) && n>=i-1
+
+(B&& I ==> wp(S, I))=
+ i<=n && res == fact(i-1) && n >= i-1  ==>  wp(res := res *  i ; i := i+1, res == fact(i-1) && n >= i-1)
+sequential
+B && I ==> wp(res := res*1; wp(i := i+1, res == fact(i-1) && n>= i-1)) 
+assignment and simplification
+B && I ==>  wp(res := res*i; res == fact((i+1)-1) && n>= (i+1)-1) 
+B && I ==>  wp(res := res*i, res == fact(i) && n>= i) 
+i <= n && res == fact(i-1) && n>= i-1 ==>  res*i ==fact(i) && n>= i
+i <= n && res == fact(i-1) ==>  res*i ==fact(i) && n>= i
+res == fact(i-1) ==>  res*i ==fact(i)
+True 
+since: fact(i-1) * i == fact(i)
+
+(!B && I ==> R)=
+   !(i <=n) && res == fact(i-1) && n>= i-1 ==> res == fact(n)
+= i>n && res == fact(i-1) && n>=i-1 ==> res ==fact(n)
+= i>n && res == fact(i-1) && n+1>=i ==> res ==fact(n)
+= res == fact(i-1) && n == i-1 ==> res ==fact(n)
+= true
