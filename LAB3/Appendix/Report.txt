@@ -29,11 +29,35 @@ method Q2(x : int, y : int) returns (big : int, small : int)
 }
 
 Q3. 
-1. We can’t use the inputs directly since it’s missing a specification. For example:  requires n0 != null && m0 != null ensures res == n0*m0
-2. The purpose of the method is to multiply m0 with n0. postcondition: res == n0*m0
-3.  conditional: wp(if(n0>=0) then n:=n0 m:=m0 else n:=-n0 m:=-m0  res==n0*m0) = (By conditional rule) (n0>=0 -> wp(n:=n0 m:=m0, res ==n0*m0)) && (!(n0>=0) -> wp(n:=-n0 m:=-m0, res ==n0*m0)) =  (By assignment rule)  (n0>=0 -> n0>=0) && (!(n0>=0) -> -n0 >=0) = true  sequential: wp(res:=res+m;n:=n-1,res==n0*m0) =  (By sequential rule) wp(res:=res+m, wp(n:=n-1, res==n0*m0)) = (By assignment rule) wp(res:=res+m, res==n0*m0 - 1) =  (By assignment rule) res-1<res true 
+1. We can’t use the inputs directly since it’s missing a specification. For example: 
+requires n0 != null && m0 != null
+ensures res == n0*m0
+
+2. The purpose of the method is to multiply m0 with n0.
+postcondition: res == n0*m0
+
+3. 
+conditional:
+wp(if(n0>=0) then n:=n0 m:=m0 else n:=-n0 m:=-m0  res==n0*m0) =
+(By conditional rule)
+(n0>=0 -> wp(n:=n0 m:=m0, res ==n0*m0)) && (!(n0>=0) -> wp(n:=-n0 m:=-m0, res ==n0*m0)) = 
+(By assignment rule) 
+(n0>=0 -> n0>=0) && (!(n0>=0) -> -n0 >=0) =
+true
+
+sequential:
+wp(res:=res+m;n:=n-1,res==n0*m0) = 
+(By sequential rule)
+wp(res:=res+m, wp(n:=n-1, res==n0*m0)) =
+(By assignment rule)
+wp(res:=res+m, res==n0*m0 - 1) = 
+(By assignment rule)
+res-1<res
+true
+
 Q4. 
-1. requires 0 <= m ensures 1 <= fact(m)
+1. requires 0 <= m
+ensures 1 <= fact(m)
 2. Vid 
 
 method ComputeFact(n : nat) returns (res : nat)
