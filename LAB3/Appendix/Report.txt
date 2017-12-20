@@ -107,8 +107,6 @@ n>0 ==> 1 == fact(2-1) && n>=2-1
 n>0 ==> n>=1
 which is trivially true
 
-Loop invariant holds at each iteration
-
 
 ****wp(while B I S, R) =
 	I
@@ -118,6 +116,7 @@ Loop invariant holds at each iteration
 = 
 res==fact(i-1) && n>=i-1
 
+Loop invariant holds at each iteration:
 (B&& I ==> wp(S, I))=
  i<=n && res == fact(i-1) && n >= i-1  ==>  wp(res := res *  i ; i := i+1, res == fact(i-1) && n >= i-1)
 sequential
@@ -131,6 +130,7 @@ res == fact(i-1) ==>  res*i ==fact(i)
 True 
 since: fact(i-1) * i == fact(i)
 
+Loop invariant holds on exit:
 (!B && I ==> R)=
    !(i <=n) && res == fact(i-1) && n>= i-1 ==> res == fact(n)
 = i>n && res == fact(i-1) && n>=i-1 ==> res ==fact(n)
