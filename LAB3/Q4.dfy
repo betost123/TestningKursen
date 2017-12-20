@@ -1,3 +1,10 @@
+ function fact(m: int): int
+  requires 0 <= m;
+  ensures 1 <= fact(m);
+{
+ if m == 0 then 1 else fact(m-1) * m
+ }
+
 method ComputeFact(n : nat) returns (res : nat)
   requires n > 0;
   ensures res == fact(n);
@@ -13,9 +20,3 @@ method ComputeFact(n : nat) returns (res : nat)
   }
  }
 
- function fact(m: int): int
-  requires 0 <= m;
-  ensures 1 <= fact(m);
-{
- if m == 0 then 1 else fact(m-1) * m
- } 
